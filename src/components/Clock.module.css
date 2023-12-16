@@ -1,0 +1,18 @@
+.container {
+  flex-direction: column;
+  grid-column: span 2;
+  grid-row: span 1; 
+
+  text-align: center;
+}
+
+.time {
+  font-family: 'Roboto Mono', monospace;
+  font-size: 5vw; /* Adjust based on initial design */ 
+  width: 100%;
+}
+
+.date {  
+  width: 100%;
+  font-size: 2vw;
+}

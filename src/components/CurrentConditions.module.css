@@ -1,0 +1,50 @@
+.container {
+  flex-direction: column;
+  grid-column: span 1;
+  grid-row: span 1;
+  text-align: center;
+
+  display: grid;
+  grid-template-areas: 
+  "primary-temperature icon"
+  "secondary-temperature icon"
+  "update-date update-date"
+  ;
+  align-items: center;
+}
+
+.primary-temperature {
+  font-size: 3vw;
+  grid-area: primary-temperature;
+  text-align: right;
+}
+
+.secondary-temperature {
+  font-size: 3vw;
+  grid-area: secondary-temperature;
+  text-align: right;
+}
+
+.icon {
+  grid-area: icon;
+}
+
+.update-date {
+  font-size: xx-small;
+  
+  color: grey;
+  text-shadow: initial;
+  grid-area: update-date;
+}
+
+.hot {
+  color: red;
+}
+
+.warm {
+  color: orange;
+}
+
+.cold {
+  color: aqua;
+}

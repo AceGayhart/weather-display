@@ -1,0 +1,29 @@
+.container {
+  grid-column: span 1;
+  grid-row: span 3; 
+
+  background-color: rgba(255,0,0,0.1) !important;
+  border: 1px solid red;
+  
+}
+
+.alert {
+  text-align: left;
+  
+}
+.event {
+  text-align: center;
+  font-size:x-large;
+}
+
+.description > p {
+  margin-bottom: 0.5em;
+}
+
+.description-heading {
+  font-size: larger;
+}
+
+.description-subheading {
+  font-weight: bold;
+}

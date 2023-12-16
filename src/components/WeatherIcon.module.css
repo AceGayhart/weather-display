@@ -1,0 +1,49 @@
+.container {
+  display: flex;
+  flex-direction: column;
+
+  justify-content: center;
+  align-items: center;
+}
+
+.pop-info {
+  color: aqua;
+}
+
+.icon {
+  /* --fa-secondary-color: goldenrod;
+  --fa-secondary-opacity: 1; */
+  filter: drop-shadow(0px -1px 0px black) 
+        drop-shadow(0px 1px 0px black) 
+        drop-shadow(-1px 0px 0px black) 
+        drop-shadow(1px 0px 0px black) 
+        drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.5));
+
+  
+}
+.fa-sun,
+.fa-sun-cloud,
+.fa-cloud-sun,
+.fa-clouds-sun,
+.fa-clouds-moon,
+.fa-cloud-drizzle,
+.fa-cloud-sun-rain,
+.fa-cloud-moon-rain,
+.fa-cloud-bolt-sun,
+.fa-cloud-bolt-moon,
+.fa-cloud-fog {
+  /* --fa-secondary-color: red; */
+}
+
+.fa-moon-stars,
+.fa-moon-cloud,
+.fa-cloud-moon,
+.fa-clouds-moon {
+  /* --fa-secondary-color: goldenrod; */
+  /* --fa-secondary-opacity: 1; */
+}
+
+.fa-snowflake {
+  --fa-secondary-color: aqua;
+  
+}

@@ -1,0 +1,21 @@
+.container {
+  grid-column: span 2;
+  grid-row: span 2;
+
+  display: flex;
+  gap: 5px;
+  text-align: center;
+  justify-content: space-around;
+  flex-direction: column;
+}
+
+.day-forecast {
+  display: grid;
+
+  grid-template-columns: 10ch 10ch 1fr 10ch 10ch;
+  grid-template-rows: 1fr;
+
+  text-align: center;
+  align-items: center;
+}
+
