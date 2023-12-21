@@ -17,13 +17,16 @@
 }
 
 .location-label {
-  font-size: 1vw;
+  display: flex;
+  align-items: center;
 }
 
+.time-zone {
+  font-size: x-small;
+  text-align: right;
+}
 
 .time-display {
-  grid-column: span 1;
-  grid-row: span 2;
   text-align: right;
   font-size: x-large;
   font-family: 'Roboto Mono', monospace;

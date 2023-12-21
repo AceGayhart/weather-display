@@ -1,18 +1,27 @@
 .container {
-  flex-direction: column;
-  grid-column: span 2;
-  grid-row: span 1; 
-
   text-align: center;
+  display: grid;
+  align-items: center;
+  grid-column: span 2;
 }
 
 .time {
-  font-family: 'Roboto Mono', monospace;
-  font-size: 5vw; /* Adjust based on initial design */ 
-  width: 100%;
+  font-size: 100pt;
+  align-items: center;
+  display: flex;
+  justify-content: center;
 }
 
-.date {  
-  width: 100%;
-  font-size: 2vw;
+.time-hour,
+.time-minute,
+.time-second {
+  font-family: 'Roboto Mono', monospace;
+}
+.time-ampm,
+.time-separator {
+  font-size: 40%;
+}
+
+.date {
+  font-size: 30pt;
 }

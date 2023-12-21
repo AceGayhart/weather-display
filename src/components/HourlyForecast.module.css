@@ -1,20 +1,29 @@
 .container {
-  grid-column: span 4;
-  grid-row: span 1;
-
   display: flex;
-  gap: 0px;
+  gap: 1px;
   text-align: center;
   justify-content: space-between;
+  grid-column: span 4;
 }
 
 .hour-forecast {
   display: grid;
-  flex: 1;
-
+  
   grid-template-columns: repeat(1, 1fr);
-  grid-template-rows: repeat(3, 1fr);
+  grid-template-rows: auto;
 
   text-align: center;
   align-items: center;
+  border-radius: 5px;
+  padding: 5px;
+  
+}
+
+
+.temperature {
+  font-family: 'Roboto Mono', monospace;
+  text-align: right;
+  font-size: smaller;
+  margin-left: auto;
+  margin-right: auto;
 }

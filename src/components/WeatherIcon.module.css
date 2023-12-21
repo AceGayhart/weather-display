@@ -13,11 +13,11 @@
 .icon {
   /* --fa-secondary-color: goldenrod;
   --fa-secondary-opacity: 1; */
-  filter: drop-shadow(0px -1px 0px black) 
+  /* filter: drop-shadow(0px -1px 0px black) 
         drop-shadow(0px 1px 0px black) 
         drop-shadow(-1px 0px 0px black) 
         drop-shadow(1px 0px 0px black) 
-        drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.5));
+        drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.5)); */
 
   
 }
