@@ -1,0 +1,35 @@
+.container {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  align-items: center;
+  justify-content: center;
+  align-self: center;
+}
+
+.container div {
+
+}
+
+.day-of-week {
+  font-size: 12pt;
+  color: orange;
+  font-family: 'Roboto Mono', monospace;
+  position: relative;
+}
+
+.active::after {
+  content: '';
+
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-left: 10px solid transparent; /* Adjust size as necessary */
+  border-right: 10px solid transparent; /* Adjust size as necessary */
+  border-bottom: 10px solid orange;
+  
+}
+
+.inactive {
+  opacity: 0.1;
+}

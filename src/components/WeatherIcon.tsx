@@ -128,11 +128,11 @@ const WeatherIcon: React.FC<WeatherIconProps> = ({
   return (
     <div className={styles.container}>
       {icon}
-
       {pop !== undefined && pop > 0 && (
         <div className={styles.popInfo}>{`${Math.round(pop * 100)}%`}</div>
       )}
-      {conditions.length>1} {
+      {conditions.length > 1}{' '}
+      {
         // TODO: Show secondary conditions.
       }
     </div>

@@ -10,13 +10,15 @@ const useWeatherData = () => {
   const fetchData = async () => {
     const cachedData = localStorage.getItem('weatherData');
     const cacheTime = localStorage.getItem('weatherDataTimestamp');
-    const tenMinutesAgo = Date.now() - 6.00000; // 10 minutes in milliseconds
+    const cacheExpireTime = Date.now() - 300_000; // 300,00 ms = 5 minutes.
 
-    if (cachedData && cacheTime && parseInt(cacheTime, 10) > tenMinutesAgo) {
+    if (cachedData && cacheTime && parseInt(cacheTime, 10) > cacheExpireTime) {
       setWeatherData(JSON.parse(cachedData));
       setLoading(false);
     } else {
       try {
+        setError(null);
+        setLoading(true);
         const data = await fetchWeatherData();
         localStorage.setItem('weatherData', JSON.stringify(data));
         localStorage.setItem('weatherDataTimestamp', Date.now().toString());
@@ -25,14 +27,15 @@ const useWeatherData = () => {
       } catch (error) {
         setError(error instanceof Error ? error.message : String(error));
         setLoading(false);
+        setWeatherData(null);
       }
     }
   };
 
   useEffect(() => {
-    fetchData(); // Initial fetch
-    const interval = setInterval(fetchData, 1500.00); // 150000 ms = 2.5 minutes
-    return () => clearInterval(interval); // Clear interval on unmount
+    fetchData(); 
+    const interval = setInterval(fetchData, 120_000); // 120,000 ms = 2 minutes.
+    return () => clearInterval(interval); 
   }, []);
 
   return { weatherData, loading, error };

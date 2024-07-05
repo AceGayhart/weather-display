@@ -1,21 +1,24 @@
 .container {
-  grid-column: span 2;
-  grid-row: span 2;
+  
+  grid-column: span 7;
+  grid-row: span 3;
 
   display: flex;
   gap: 5px;
   text-align: center;
-  justify-content: space-around;
+
   flex-direction: column;
+  
+  color: white;
+  font-family: 'Roboto', Arial, Helvetica, sans-serif;
 }
 
 .day-forecast {
   display: grid;
 
-  grid-template-columns: 10ch 10ch 1fr 10ch 10ch;
+  grid-template-columns: 6ch 6ch 1fr 6ch 6ch;
   grid-template-rows: 1fr;
 
   text-align: center;
   align-items: center;
 }
-

@@ -1,22 +1,20 @@
 import React from 'react';
 import useCurrentTime from '../hooks/useCurrentTime';
-import styles from './WorldClock.module.css'
+import styles from './WorldClock.module.css';
 
 function formatTimes(
   timeZones: string[],
-  currentTime: Date
-): { [key: string]: { time: string, dateOffset: string } } {
+  currentDateTime: Date
+): { [key: string]: { time: string; dateOffset: string; timeZone: string } } {
   const timeOptions: Intl.DateTimeFormatOptions = {
     hour: '2-digit',
     minute: '2-digit',
     hour12: true,
   };
 
-  const dateOptions: Intl.DateTimeFormatOptions = {
-    timeZoneName: 'short',
-  };
-
-  const times: { [key: string]: { time: string, dateOffset: string } } = {};
+  const times: {
+    [key: string]: { time: string; dateOffset: string; timeZone: string };
+  } = {};
 
   for (const timeZone of timeZones) {
     const timeFormatter = new Intl.DateTimeFormat('en-US', {
@@ -24,65 +22,96 @@ function formatTimes(
       timeZone,
     });
 
-    const dateFormatter = new Intl.DateTimeFormat('en-US', {
-      ...dateOptions,
-      timeZone,
+    const timeZoneFormatter = new Intl.DateTimeFormat('en-US', {
+      timeZone: timeZone,
+      timeZoneName: 'long',
     });
 
-    const localDateTime = new Date(currentTime.toLocaleString('en-US', { timeZone }));
-    const dayDifference = localDateTime.getDate() - currentTime.getDate();
+    const localDateTime = new Date(
+      currentDateTime.toLocaleString('en-US', { timeZone })
+    );
+
+    const localDate = new Date(
+      localDateTime.getFullYear(),
+      localDateTime.getMonth(),
+      localDateTime.getDate()
+    );
+
+    const currentDate = new Date(
+      currentDateTime.getFullYear(),
+      currentDateTime.getMonth(),
+      currentDateTime.getDate()
+    );
+
+    // Calculate the difference in milliseconds and convert to days
+    const dayDifference =
+      (localDate.getTime() - currentDate.getTime()) / (1000 * 60 * 60 * 24);
+
+    let hourDifference = localDateTime.getHours() - currentDateTime.getHours();
+
     let dateLabel = '';
-    let hourDifference = localDateTime.getHours() - currentTime.getHours();
-    
     switch (dayDifference) {
       case 0:
         dateLabel = 'Today';
         break;
       case 1:
         dateLabel = 'Tomorrow';
-        hourDifference = (24 - currentTime.getHours()) + localDateTime.getHours();
+        hourDifference =
+          24 - currentDateTime.getHours() + localDateTime.getHours();
         break;
       case -1:
         dateLabel = 'Yesterday';
-        hourDifference = -(currentTime.getHours() + (24 - localDateTime.getHours()));
+        hourDifference = -(
+          currentDateTime.getHours() +
+          (24 - localDateTime.getHours())
+        );
         break;
       default:
-        dateLabel = dateFormatter.format(localDateTime);
+        dateLabel =
+          dayDifference > 0
+            ? `${dayDifference} days ahead`
+            : `${Math.abs(dayDifference)} days behind`;
+        break;
     }
-    
+
+    const timeZoneName = (
+      timeZoneFormatter.format(currentDateTime) + ', '
+    ).split(', ')[1];
+
     times[timeZone] = {
-      time: timeFormatter.format(currentTime),
-      dateOffset: `${dateLabel}, +${hourDifference} hrs`,
+      time: timeFormatter.format(currentDateTime),
+      dateOffset: `${dateLabel}, ${hourDifference} hrs`,
+      timeZone: timeZoneName,
     };
   }
 
   return times;
 }
 
-
 const timeZoneLabels: { [key: string]: string } = {
-  'America/New_York': 'Cleveland, Ohio, USA', // EST/EDT
-  'America/Montevideo': 'Montevideo, Uraguay', // UYT
+  'America/New_York': 'Cleveland, OH, USA', // EST/EDT
+  'America/Montevideo': 'Montevideo, Uruguay', // UYT
   UTC: 'UTC',
+  //'America/Los_Angeles': 'San Francisco, CA, USA',
   'Europe/Kiev': 'Kyiv, Ukraine', // EET/EEST
 };
 
 const WorldClock = () => {
-  const currentTime = useCurrentTime();
-  const times = formatTimes(Object.keys(timeZoneLabels), currentTime);
+  const { currentDateTime } = useCurrentTime();
+  const times = formatTimes(Object.keys(timeZoneLabels), currentDateTime);
 
   return (
     <div className={styles.container}>
       {Object.entries(timeZoneLabels).map(([timeZone, label]) => (
         <div key={timeZone} className={styles.timeZoneBlock}>
-          <div className={styles.dateOffset}>{times[timeZone].dateOffset}</div>
-          <div className={styles.timeDisplay}>{times[timeZone].time}</div>
           <div className={styles.locationLabel}>{label}</div>
+          <div className={styles.timeDisplay}>{times[timeZone].time}</div>
+          <div className={styles.dateOffset}>{times[timeZone].dateOffset}</div>
+          <div className={styles.timeZone}>{times[timeZone].timeZone}</div>
         </div>
       ))}
     </div>
   );
 };
-
 
 export default WorldClock;

@@ -32,19 +32,34 @@ So, this is currently both a work in progress and a learning process.
 - Some components don't resize; contents overflow.
 - Moon phase display.
 - Move icons to their own component.
-- Back-end service:
-  - Weather pull
-  - Configuration changes
+
 - Minutely Data
   - Don't render if there is no data
   - Don't render if the data is older than the current date
   - Don't render if there is no precipitation.
-  - If the current date/time is older than the forecast, render the current time mark at the beginning (or not at all)
-- Wind Direction
+- Hourly Data
+  - Insert items for sunrise/sunset
+  - Is it practical to size the gradient colors so that it matches sunrise/sunset?
+  - Wind Direction
 - Air Quality
-- Weather icon colors
+- Weather icon colors?
 - Graph of hourly temperature data.
 - Center/resize with screen size changes.
+- Resize based on visible components.
+- Don't throw errors if the backend service is down; instead update the UI as appropriate.
+- Hourly data sometimes include preceiptation totals in mm/h. It would be nice to indicate this.
+  "pop": 0
+
+      "pop": 0.22,
+      "rain": {
+        "1h": 0.15
+      }
+
+      "pop": 0.83,
+      "snow": {
+        "1h": 0.66
+      }
+- Show secondary conditions.
 
 ## Resources / Links
 

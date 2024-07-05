@@ -1,0 +1,59 @@
+/* https://www.cssscript.com/minimal-digital-clock-javascript-css/ */
+
+.container {
+  grid-column: span 6;
+  grid-row: span 2;
+
+  text-align: center;
+  display: grid;
+
+  grid-auto-flow: row;
+
+  color: white;
+}
+
+.container > div {
+}
+
+.time {
+  font-size: 9rem;
+
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  text-shadow: 0 0 2px rgba(0, 0, 0, 0.7);
+}
+
+.numbers {
+  font-family: 'Roboto Mono', monospace;
+}
+
+.time-separator {
+  font-family: 'Roboto', Arial, Helvetica, sans-serif;
+  font-size: 85%;
+  color: orange;
+}
+
+.time-ampm-container {
+  display: grid;
+
+  font-family: 'Roboto Mono', monospace;
+}
+
+.time-ampm {
+  font-size: 38pt;
+  color: orange;
+}
+
+.date {
+  font-size: 20pt;
+  align-items: center;
+  font-family: 'Roboto', Arial, Helvetica, sans-serif;
+}
+
+.active {
+}
+
+.inactive {
+  opacity: 0.1;
+}

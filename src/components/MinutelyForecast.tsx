@@ -40,6 +40,8 @@ const MinutelyForecastComponent: React.FC<MinutelyForecastProps> = ({
   minutelyData,
   limit = 60,
 }) => {
+  const { currentDateTime } = useCurrentTime();
+
   const formatTime = (unixTimestamp: number) => {
     const date = convertUnixToDate(unixTimestamp);
     return date.toLocaleTimeString('en-US', {
@@ -49,39 +51,41 @@ const MinutelyForecastComponent: React.FC<MinutelyForecastProps> = ({
     });
   };
 
-  const currentTime = useCurrentTime();
-  const currentTimeFormatted = currentTime.toLocaleTimeString([], {
-    hour: 'numeric',
-    minute: '2-digit',
-    hour12: true,
-  })
-  if (!minutelyData) { return null;}
+  if (!minutelyData) {
+    return null;
+  }
 
-  const limitedData = minutelyData.slice(0, limit);
+  const getCurrentMinute = () => {
+    return new Date(currentDateTime.setSeconds(0, 0));
+  };
 
-  const allZeroPrecipitation = limitedData.every(
+  const currentMinute = getCurrentMinute();
+
+  const displayedMinutes = minutelyData
+    .filter((minute) => new Date(minute.dt * 1000) >= currentMinute)
+    .slice(0, limit);
+
+  const allZeroPrecipitation = displayedMinutes.every(
     (forecast) => forecast.precipitation === 0
   );
   if (allZeroPrecipitation) {
-    // return null;
-    // TODO: Conditionally hide precipitation graph.
+    return null;
   }
 
   const chartData = {
-    labels: limitedData.map((data) => formatTime(data.dt)), // Convert Unix timestamp to readable time
+    labels: displayedMinutes.map((data) => formatTime(data.dt)), // Convert Unix timestamp to readable time
     datasets: [
       {
         label: 'Precipitation (mm/h)',
-        data: limitedData.map((data) => data.precipitation),
+        data: displayedMinutes.map((data) => data.precipitation),
         fill: true,
         backgroundColor: 'rgba(0, 255, 255, 0.2)',
-        borderColor: 'aqua',
+        borderColor: 'red',
         borderWidth: 2,
+        pointRadius: 0,
       },
     ],
-  };
-
-; // Adjust formatting as needed
+  }; // Adjust formatting as needed
 
   const options = {
     maintainAspectRatio: false,
@@ -89,30 +93,35 @@ const MinutelyForecastComponent: React.FC<MinutelyForecastProps> = ({
       legend: {
         display: false,
       },
-      annotation: {
-        annotations: {
-          line1: {
-            type: 'line' as const,
-            xMin: currentTimeFormatted,
-            xMax: currentTimeFormatted,
-            borderColor: 'red',
-            borderWidth: 3,
-          },
-        },
-      },
+      // annotation: {
+      //   annotations: {
+      //     line1: {
+      //       type: 'line' as const,
+      //       xMin: currentTimeFormatted,
+      //       xMax: currentTimeFormatted,
+      //       borderColor: 'red',
+      //       borderWidth: 3,
+      //     },
+      //   },
+      // },
     },
     scales: {
       x: {
         grid: {
-          color: 'grey',
+          color: 'ghostwhite',
         },
-        ticks: { color: 'grey' },
+        ticks: { color: 'darkgrey' },
       },
       y: {
-        grid: {
-          color: 'grey',
+        title: {
+          display: true,
+          text: '(mm/h)',
+          color: 'white',
         },
-        ticks: { color: 'grey' },
+        grid: {
+          color: 'ghostwhite',
+        },
+        ticks: { color: 'ghostwhite' },
         beginAtZero: true,
       },
     },
@@ -120,7 +129,7 @@ const MinutelyForecastComponent: React.FC<MinutelyForecastProps> = ({
 
   return (
     <div className={styles.container}>
-      <div>Precipitation (mm/h)</div>
+      <div>Precipitation by Minute</div>
       <div className={styles.chart}>
         <Line data={chartData} options={options} />
       </div>

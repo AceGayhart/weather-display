@@ -103,9 +103,9 @@ const generateGradient = (currentTime: Date): string => {
 
   // Combine the gradients with the adjusted alpha channels
   const combinedGradient =
-    'linear-gradient(45deg, ' +
+    'linear-gradient(in lch, ' +
     adjustedNextGradient +
-    '), linear-gradient(45deg, ' +
+    '), linear-gradient(in lch, ' +
     colors.currentColor +
     ')';
   return combinedGradient;
