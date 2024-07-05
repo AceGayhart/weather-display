@@ -45,23 +45,6 @@ const getCurrentHour = (date: Date) => {
   return new Date(date.setMinutes(0, 0, 0));
 };
 
-function createSegment(data: DataPoint[], color: string) {
-  return {
-    yAxisID: 'yFahrenheit',
-    label: 'Fahrenheit',
-    data: data,
-    fill: false,
-    borderColor: color,
-    borderWidth: 1,
-    pointRadius: 0,
-  };
-}
-
-type DataPoint = {
-  x: string;
-  y: number;
-};
-
 const HourlyTemperatureGraph: React.FC<HourlyForecastProps> = ({
   hourlyData,
   limit = 50,
@@ -81,36 +64,6 @@ const HourlyTemperatureGraph: React.FC<HourlyForecastProps> = ({
       hour12: true,
     });
   };
-
-  // Process displayedHours to create segments
-  const segments = [];
-  let currentSegment: DataPoint[] = [];
-  let currentColor = 'red'; // Default color
-
-  displayedHours.forEach((hour, index) => {
-    const tempFahrenheit = kelvinToFahrenheit(hour.temp);
-    const isBelowFreezing = tempFahrenheit <= 32;
-    const segmentColor = isBelowFreezing ? 'blue' : 'red';
-
-    if (segmentColor !== currentColor || index === displayedHours.length - 1) {
-      if (currentSegment.length > 0) {
-        // End the current segment and start a new one
-        segments.push(createSegment([...currentSegment], currentColor));
-        currentSegment = []; // Reset current segment
-      }
-      currentColor = segmentColor; // Update current color
-    }
-
-    // Add the current point to the segment
-    currentSegment.push({ x: formatTime(hour.dt), y: tempFahrenheit });
-  });
-
-  // Don't forget to add the last segment if it has data
-  if (currentSegment.length > 0) {
-    segments.push(createSegment(currentSegment, currentColor));
-  }
-
-  
 
   const fahrenheitData = displayedHours.map((data) =>
     kelvinToFahrenheit(data.temp)
@@ -149,6 +102,35 @@ const HourlyTemperatureGraph: React.FC<HourlyForecastProps> = ({
     plugins: {
       legend: {
         display: false,
+      },
+      annotation: {
+        annotations: {
+          freezingLineFahrenheit: {
+            type: 'line',
+            yMin: 32,
+            yMax: 32,
+            borderColor: 'blue',
+            borderWidth: 2,
+            label: {
+              content: 'Freezing point (°F)',
+              position: 'end',
+              backgroundColor: 'rgba(0, 0, 255, 0.5)',
+            },
+          },
+          freezingLineCelsius: {
+            type: 'line',
+
+            yMin: 0,
+            yMax: 0,
+            borderColor: 'blue',
+            borderWidth: 2,
+            label: {
+              content: 'Freezing point (°C)',
+              position: 'end',
+              backgroundColor: 'rgba(0, 0, 255, 0.5)',
+            },
+          },
+        },
       },
     },
     scales: {

@@ -65,12 +65,12 @@ const MinutelyForecastComponent: React.FC<MinutelyForecastProps> = ({
     .filter((minute) => new Date(minute.dt * 1000) >= currentMinute)
     .slice(0, limit);
 
-  // const allZeroPrecipitation = displayedMinutes.every(
-  //   (forecast) => forecast.precipitation === 0
-  // );
-  // if (allZeroPrecipitation) {
-  //   return null;
-  // }
+  const allZeroPrecipitation = displayedMinutes.every(
+    (forecast) => forecast.precipitation === 0
+  );
+  if (allZeroPrecipitation) {
+    return null;
+  }
 
   const chartData = {
     labels: displayedMinutes.map((data) => formatTime(data.dt)), // Convert Unix timestamp to readable time

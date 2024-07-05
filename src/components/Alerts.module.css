@@ -1,25 +1,61 @@
 .container {
-  background-color: rgba(255, 0, 0, 0.9) !important;
-  border: 1px outset darkred !important;
-  grid-column: span 2;
+  /* background-color: rgba(255, 0, 0, 0.3) !important; */
+  /* border: 1px solid darkred !important; */
+  border-style: solid !important;
+  border-radius: 10px !important;
+  border-width: 1px 1px 1px 1px !important;
+  border-color: red !important;
+  padding: 0 !important;
+  background: black !important;
+  color: red;
+
+  grid-column: span 7;
+  grid-row: span 4;
+  
+
+  font-family: 'Roboto', Arial, Helvetica, sans-serif;
 
 }
 
 .alert {
-  text-align: left;
+  display: grid;
+
+  grid-template-columns: 10ch 1fr;
+  gap: 5px;
+  
+  
 }
+h1,
+h2 {
+  text-wrap: balance;
+  grid-column: 1/1;
+}
+p {
+  grid-column: 2/2;
+  
+  text-wrap: pretty;
+}
+
+h1 {
+  font-size: 90%;
+  grid-column: span 2;
+  color: black;
+  background-color: red;
+  padding: 1px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  
+}
+h2 {
+  font-size: 85%;
+}
+
 .event {
   text-align: center;
+  
 }
 
-.description > p {
-  margin-bottom: 0.25em;
-}
-
-.description-heading {
-  font-weight: bolder;
-}
-
-.description-subheading {
-  font-weight: bold;
+p.description-heading {
+  grid-column: span 2;
+  
 }

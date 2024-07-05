@@ -1,5 +1,5 @@
 import React from 'react';
-import Clock from './components/Clock';
+import Clock from './components/Clock/Clock';
 import WorldClock from './components/WorldClock';
 import CurrentConditions from './components/CurrentConditions';
 import HourlyForecastComponent from './components/HourlyForecast';
@@ -37,13 +37,13 @@ const App = () => {
       <WorldClock />
       {weatherData && (
         <>
+          {/* <Alerts alerts={testWeatherAlerts} /> */}
+          {weatherData.alerts && <Alerts alerts={weatherData.alerts} />}
           <CurrentConditions currentConditions={weatherData.current} />
           <HourlyForecastComponent hourlyData={weatherData.hourly} limit={30} />
           <HourlyTemperatureGraph hourlyData={weatherData.hourly} />
           <MinutelyForecastComponent minutelyData={weatherData.minutely} />
-          <DailyForecastComponent dailyData={weatherData.daily} limit={4} />
-          {/* <Alerts alerts={testWeatherAlerts} /> */}
-          {weatherData.alerts && <Alerts alerts={weatherData.alerts} />}
+          <DailyForecastComponent dailyData={weatherData.daily} limit={5} />
         </>
       )}
       {loading && (
@@ -54,6 +54,8 @@ const App = () => {
           Error loading weather data: {error}
         </div>
       )}
+    
+ 
     </div>
   );
 };

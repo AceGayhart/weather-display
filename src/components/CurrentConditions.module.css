@@ -1,4 +1,6 @@
 .container {
+  grid-column: span 4;
+  grid-row: span 2;
   text-align: center;
 
   display: grid;
@@ -7,6 +9,9 @@
 
   grid-template-columns: repeat(2, 1fr);
   gap: 10px;
+  text-shadow: 0 0 2px rgba(0, 0, 0, 0.7);
+  font-family: 'Roboto', Arial, Helvetica, sans-serif;
+  
 }
 
 .temperature {

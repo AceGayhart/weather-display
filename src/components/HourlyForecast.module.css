@@ -1,14 +1,21 @@
 .container {
+  grid-column: span 16;
+  grid-row: span 2;
+
   display: flex;
   gap: 1px;
   text-align: center;
   justify-content: space-between;
-  grid-column: span 4;
+  color: white;
+  text-shadow: 0 0 2px rgba(0, 0, 0, 0.9), 0 0 4px rgba(0, 0, 0, 0.7),
+    0 0 6px rgba(0, 0, 0, 0.5);
+  font-family: 'Roboto', Arial, Helvetica, sans-serif;
+  
 }
 
 .hour-forecast {
   display: grid;
-  
+
   grid-template-columns: repeat(1, 1fr);
   grid-template-rows: auto;
 
@@ -16,9 +23,7 @@
   align-items: center;
   border-radius: 5px;
   padding: 5px;
-  
 }
-
 
 .temperature {
   font-family: 'Roboto Mono', monospace;

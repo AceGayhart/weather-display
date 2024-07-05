@@ -4,16 +4,12 @@ import styles from './WorldClock.module.css';
 
 function formatTimes(
   timeZones: string[],
-  currentTime: Date
+  currentDateTime: Date
 ): { [key: string]: { time: string; dateOffset: string; timeZone: string } } {
   const timeOptions: Intl.DateTimeFormatOptions = {
     hour: '2-digit',
     minute: '2-digit',
     hour12: true,
-  };
-
-  const dateOptions: Intl.DateTimeFormatOptions = {
-    timeZoneName: 'shortGeneric',
   };
 
   const times: {
@@ -26,49 +22,65 @@ function formatTimes(
       timeZone,
     });
 
-    const dateFormatter = new Intl.DateTimeFormat('en-US', {
-      ...dateOptions,
-      timeZone,
-    });
-
     const timeZoneFormatter = new Intl.DateTimeFormat('en-US', {
       timeZone: timeZone,
       timeZoneName: 'long',
     });
 
     const localDateTime = new Date(
-      currentTime.toLocaleString('en-US', { timeZone })
+      currentDateTime.toLocaleString('en-US', { timeZone })
     );
-    const dayDifference = localDateTime.getDate() - currentTime.getDate();
-    let dateLabel = '';
-    let hourDifference = localDateTime.getHours() - currentTime.getHours();
 
+    const localDate = new Date(
+      localDateTime.getFullYear(),
+      localDateTime.getMonth(),
+      localDateTime.getDate()
+    );
+
+    const currentDate = new Date(
+      currentDateTime.getFullYear(),
+      currentDateTime.getMonth(),
+      currentDateTime.getDate()
+    );
+
+    // Calculate the difference in milliseconds and convert to days
+    const dayDifference =
+      (localDate.getTime() - currentDate.getTime()) / (1000 * 60 * 60 * 24);
+
+    let hourDifference = localDateTime.getHours() - currentDateTime.getHours();
+
+    let dateLabel = '';
     switch (dayDifference) {
       case 0:
         dateLabel = 'Today';
         break;
       case 1:
         dateLabel = 'Tomorrow';
-        hourDifference = 24 - currentTime.getHours() + localDateTime.getHours();
+        hourDifference =
+          24 - currentDateTime.getHours() + localDateTime.getHours();
         break;
       case -1:
         dateLabel = 'Yesterday';
         hourDifference = -(
-          currentTime.getHours() +
+          currentDateTime.getHours() +
           (24 - localDateTime.getHours())
         );
         break;
       default:
-        dateLabel = dateFormatter.format(localDateTime);
+        dateLabel =
+          dayDifference > 0
+            ? `${dayDifference} days ahead`
+            : `${Math.abs(dayDifference)} days behind`;
+        break;
     }
 
-    const timeZoneName = (timeZoneFormatter.format(currentTime) + ', ').split(
-      ', '
-    )[1];
+    const timeZoneName = (
+      timeZoneFormatter.format(currentDateTime) + ', '
+    ).split(', ')[1];
 
     times[timeZone] = {
-      time: timeFormatter.format(currentTime),
-      dateOffset: `${dateLabel}, +${hourDifference} hrs`,
+      time: timeFormatter.format(currentDateTime),
+      dateOffset: `${dateLabel}, ${hourDifference} hrs`,
       timeZone: timeZoneName,
     };
   }
@@ -80,6 +92,7 @@ const timeZoneLabels: { [key: string]: string } = {
   'America/New_York': 'Cleveland, OH, USA', // EST/EDT
   'America/Montevideo': 'Montevideo, Uruguay', // UYT
   UTC: 'UTC',
+  //'America/Los_Angeles': 'San Francisco, CA, USA',
   'Europe/Kiev': 'Kyiv, Ukraine', // EET/EEST
 };
 

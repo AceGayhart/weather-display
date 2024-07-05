@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Roboto+Mono:wght@400;700&display=swap');
 
 * {
-  font-family: 'Roboto', Arial, Helvetica, sans-serif;
+  /* font-family: 'Roboto', Arial, Helvetica, sans-serif; */
   box-sizing: border-box;
   padding: 0;
   margin: 0;
@@ -12,29 +12,48 @@ html {
 }
 
 body {
-  color: white;
+  /* color: white;
+  text-shadow: 0 0 10px rgba(0, 0, 0, 0.7), 0 0 40px rgba(0, 0, 0, 0.7); */
+
+  /* --grid-size-width: calc(100vw / 16);
+  --grid-size-height: calc(100vh / 9);
+  background-color: black;
+  background-image: linear-gradient(
+      to right,
+      rgba(255, 0, 0, 0.9) 1px,
+      transparent 1px
+    ),
+    linear-gradient(to bottom, rgba(255, 0, 0, 0.9) 1px, transparent 1px);
+  background-size: var(--grid-size-width) var(--grid-size-height); */
 }
 
 .grid-container {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(20%, 1fr));
 
-  /* align-items: flex-start;
-  justify-items: center; */
+  grid-template-columns: repeat(16, 1fr);
+  grid-template-rows: repeat(9, 1fr);
+  grid-auto-flow: dense;
 
-  /* justify-content: center;
-  align-content: center; */
-  
+  justify-items: center;
+  align-items: center;
 
-  gap: 5px;
+  grid-gap: 10px;
   height: 100vh;
   padding: 5px;
 }
 
 .grid-container > div {
-  background: rgba(0, 0, 0, 0.5);
-  padding: 10px;
-  border-radius: 10px;
+  padding: 5px;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.58);
+  backdrop-filter: blur(15px);
 
-  
+  border-radius: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+
+  border: 1px dotted blue;
+
+  flex-shrink: 1;
+  flex-grow: 1;
 }

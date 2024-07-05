@@ -4,6 +4,7 @@
 
   justify-content: center;
   align-items: center;
+  color: white;
 }
 
 .pop-info {
@@ -18,8 +19,6 @@
         drop-shadow(-1px 0px 0px black) 
         drop-shadow(1px 0px 0px black) 
         drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.5)); */
-
-  
 }
 .fa-sun,
 .fa-sun-cloud,
@@ -45,5 +44,4 @@
 
 .fa-snowflake {
   --fa-secondary-color: aqua;
-  
 }

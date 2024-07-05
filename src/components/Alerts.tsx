@@ -19,38 +19,33 @@ const Alerts: React.FC<AlertsProps> = ({ alerts }) => {
     day: 'numeric',
     hour: '2-digit',
     minute: '2-digit',
-    second: '2-digit',
     hour12: true,
-    timeZoneName: 'short',
   };
 
   const formatter = new Intl.DateTimeFormat('en-US', {
     ...options,
   });
 
-  console.log(alerts[0]);
-  const formatDescription = (description: string) => {
+  const formatDescription = (description: string, compositeKey: string) => {
     // Split the description into segments based on '*' characters
     const segments = description.split('*').map((segment) => segment.trim());
 
     return segments.map((segment, index) => {
+      const key = `${compositeKey}-${index}`;
+
       if (index === 0) {
-        // Treat the first segment as a header
         return (
-          <p className={styles.descriptionHeading} key={index}>
+          <p className={styles.descriptionHeading} key={key}>
             {segment}
           </p>
         );
       } else {
-        // Wrap subsequent segments in divs with a span for the subheading
         const [subheading, ...rest] = segment.split('...');
         return (
-          <p key={index}>
-            <span className={styles.descriptionSubheading}>
-              {subheading}...
-            </span>
-            {rest.join('...')}
-          </p>
+          <React.Fragment key={key}>
+            <h2 className={styles.descriptionSubheading}>{subheading}</h2>
+            <p key={key}>{rest.join('...')}</p>
+          </React.Fragment>
         );
       }
     });
@@ -58,27 +53,30 @@ const Alerts: React.FC<AlertsProps> = ({ alerts }) => {
 
   return (
     <div className={styles.container}>
-      {alerts.map((alert, index) => (
-        <div key={index} className={styles.alert}>
-          <div className={styles.event}>{alert.event}</div>
-          <div className={styles.description}>
-            {formatDescription(alert.description)}
-          </div>
-          <div>
-            <span className={styles.descriptionSubheading}>Date:</span>
-            {formatter.format(convertUnixToDate(alert.start))}
-            <span className={styles.descriptionSubheading}>&mdash;</span>
-            {formatter.format(convertUnixToDate(alert.end))}
-          </div>
+      {alerts.map((alert, index) => {
+        const compositeKey = `${alert.start}-${alert.end}-${alert.event}-${index}`;
 
-          {alert.tags && alert.tags.length > 0 && (
-            <div>
-              <span className={styles.descriptionSubheading}>Tags:</span>{' '}
-              {alert.tags.join(', ')}
-            </div>
-          )}
-        </div>
-      ))}
+        return (
+          <div key={compositeKey} className={styles.alert}>
+            <h1 className={styles.event}>{alert.event}</h1>
+            {formatDescription(alert.description, compositeKey)}
+
+            <h2>DATE</h2>
+            <p>
+              {formatter.format(convertUnixToDate(alert.start))}
+              &mdash;
+              {formatter.format(convertUnixToDate(alert.end))}
+            </p>
+
+            {alert.tags && alert.tags.length > 0 && (
+              <>
+                <h2>TAGS</h2>
+                <p>{alert.tags.join(', ')} </p>
+              </>
+            )}
+          </div>
+        );
+      })}
     </div>
   );
 };

@@ -1,8 +1,14 @@
 .container {
+  grid-column: span 3;
+  grid-row: span 2;
+
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   gap: 5px;
+  color: white;
+  text-shadow: 0 0 2px rgba(0, 0, 0, 0.7);
+  font-family: 'Roboto', Arial, Helvetica, sans-serif;
 }
 
 .time-zone-block {
@@ -28,6 +34,6 @@
 
 .time-display {
   text-align: right;
-  font-size: x-large;
+  font-size: large;
   font-family: 'Roboto Mono', monospace;
 }
